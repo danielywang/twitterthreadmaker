@@ -162,7 +162,11 @@ class TweetBox extends React.Component {
       rendArr.push(<ThreadBox key={0} val={""} num={0} arrLen={arr.length} />);
     }
 
-
+    //mobile height adjustment. Perhaps calculate this per screen?     
+    let box = <textarea value={this.state.value} onChange={this.handleChange} />;
+    if (/Mobi/.test(navigator.userAgent)) {
+      box = <textarea value={this.state.value} onChange={this.handleChange} style={{minHeight:"250px"}}/>;
+    }
 
     return (
 
@@ -171,7 +175,8 @@ class TweetBox extends React.Component {
           <form >
             <label>
               <div style= {{color:"white",fontSize:"22px"}}>Tweet:</div>
-          <textarea value={this.state.value} onChange={this.handleChange} />
+          {/* <textarea value={this.state.value} onChange={this.handleChange} /> */}
+          {box}
             </label>
 
           </form>
