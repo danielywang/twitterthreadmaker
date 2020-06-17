@@ -1,13 +1,100 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+body, .restart{
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+.html, body, .htmlbody {
+  height:100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  padding-bottom: 50px;
 }
+
+button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.ThreadBox {
+  padding: 10px;
+  margin-top: -2px;
+  border: 2px solid #000000;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 100%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  height:100%;
+}
+
+textarea {
+  width: 100%; 
+  min-height:200px;
+  height: fit-content;
+  resize:vertical;
+}
+
+.center {
+  margin: auto;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 10px;
+}
+
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+
+}
+
+.play {
+  display: flex;
+  flex-direction: row;
+}
+
+.info {
+  margin-left: -90px;
+}
+
+footer {
+  background-color:  rgb(255, 132, 0);
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  margin-top: 150px;
+  overflow: hidden;
+}
+
