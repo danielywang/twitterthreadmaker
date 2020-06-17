@@ -136,7 +136,7 @@ class TweetBox extends React.Component {
     return (
 
       <div className="row">
-        <div className="column" style={{ backgroundColor: "#33C4FF" }}>
+        <div className="column" style={{ backgroundColor: "#1DA1F1" }}>
           <form >
             <label>
               Tweet:
@@ -145,7 +145,7 @@ class TweetBox extends React.Component {
 
           </form>
         </div>
-        <div className="column" style={{ backgroundColor: "#C1EDFF" }}>
+        <div className="column" style={{ backgroundColor: "#E1E8EE" }}>
           {rendArr}
         </div>
       </div>
