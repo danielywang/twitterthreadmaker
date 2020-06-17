@@ -1,5 +1,5 @@
 body, .restart{
-  font: 14px "Century Gothic", Futura, sans-serif;
+  font: 18px "Century Gothic", Futura, sans-serif;
   margin: 20px;
 }
 .html, body, .htmlbody {
@@ -52,6 +52,7 @@ textarea {
   min-height:200px;
   height: fit-content;
   resize:vertical;
+  font: 18px "Century Gothic", Futura, sans-serif;
 }
 
 .center {
@@ -95,6 +96,6 @@ footer {
   height: 50px;
   width: 100%;
   margin-top: 150px;
+  padding-bottom: 60px;
   overflow: hidden;
 }
-
