@@ -11,25 +11,37 @@ class ThreadBox extends React.Component {
   }
 
   render() {
-    console.log(this.props.num);
-    console.log(this.props.val)
+    //first row
     if (this.props.num === 0 && (this.props.arrLen === 1 || this.props.arrLen === 0)) {
       let msg = this.props.val;
       if (this.props.val === "") {
         msg = "Start typing on the left!";
       }
-      return (
-        <div className="ThreadBox initThread">
+      //if on mobile
+      if (/Mobi/.test(navigator.userAgent)) {
+        return (
+          <div className="ThreadBox">
+  
+            <button onClick={() => { navigator.clipboard.writeText(msg) }} > Copy</button>
+            <p>{msg}</p>
+  
+          </div>
+        )
+      }
+      //if on desktop
+      else {
+        return (
+          <div className="ThreadBox initThread">
 
-          <button onClick={() => { navigator.clipboard.writeText(msg) }} > Copy</button>
-          <p>{msg}</p>
+            <button onClick={() => { navigator.clipboard.writeText(msg) }} > Copy</button>
+            <p>{msg}</p>
 
-        </div>
-      )
+          </div>
+        )
+      }
     }
-
+    //not first row
     else {
-
       return (
         <div className="ThreadBox">
 
