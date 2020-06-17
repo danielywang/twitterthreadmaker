@@ -28,23 +28,19 @@ class ThreadBox extends React.Component {
 
 }
 
-class EssayForm extends React.Component {
+class TweetBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: 'Type your tweet here!',
 
     };
-
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
-    // this.setState({ arr: this.thread(240, this.state.value) });
     event.preventDefault();
-
   }
 
 
@@ -68,6 +64,7 @@ class EssayForm extends React.Component {
   }
 
   threadCutter(l, s) {
+  //working version. Prevents word cutoff
     l -= 8;
     const len = s.length;
     let boxes = Number(Math.ceil(len / l));
@@ -160,7 +157,7 @@ class EssayForm extends React.Component {
 
 ReactDOM.render(
   
-  <EssayForm />,
+  <TweetBox />,
   document.getElementById('root')
 );
 
