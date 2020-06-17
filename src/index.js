@@ -2,10 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//TODO: add paste to clipboard
-//make the word cutoff better...
-
-
 class ThreadBox extends React.Component {
   constructor(props) {
     super(props);
@@ -24,10 +20,10 @@ class ThreadBox extends React.Component {
       }
       return (
         <div className="ThreadBox initThread">
-          
-            <button onClick={() => {navigator.clipboard.writeText(msg)}} > Copy</button>
-            <p>{msg}</p>
-          
+
+          <button onClick={() => { navigator.clipboard.writeText(msg) }} > Copy</button>
+          <p>{msg}</p>
+
         </div>
       )
     }
@@ -36,15 +32,14 @@ class ThreadBox extends React.Component {
 
       return (
         <div className="ThreadBox">
-          
-            <button onClick={() => {navigator.clipboard.writeText(this.props.val)}} > Copy</button>
-            <p>{this.props.val}</p>
-          
+
+          <button onClick={() => { navigator.clipboard.writeText(this.props.val) }} > Copy</button>
+          <p>{this.props.val}</p>
+
         </div>
       )
     }
   }
-
 
 }
 
@@ -84,26 +79,26 @@ class TweetBox extends React.Component {
   }
 
   threadCutter(l, s) {
-  //working version. Prevents word cutoff
+    //working version. Prevents word cutoff
     l -= 8;
     const len = s.length;
     let boxes = Number(Math.ceil(len / l));
     let threads = [];
     let endChar = 0;
-    
+
 
     for (let i = 0; i < boxes; i++) {
       let changed = false;
       let valid = true;
       let usedChar = l;
       const thresh = 10
-      
-      if (s.substring(endChar+usedChar,endChar+usedChar+1) !== " ") {
+
+      if (s.substring(endChar + usedChar, endChar + usedChar + 1) !== " ") {
         valid = false;
         // console.log(s.substring(endChar+usedChar,endChar+usedChar+1));
-        for (let j = endChar+usedChar; j > endChar + usedChar-thresh; j--) {
-          if (s.substring(j,j+1)=== " ") {
-            usedChar = j-endChar;
+        for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
+          if (s.substring(j, j + 1) === " ") {
+            usedChar = j - endChar;
             // console.log(usedChar)
             changed = true;
             break;
@@ -115,15 +110,15 @@ class TweetBox extends React.Component {
       let msg = " (" + (i + 1) + "/" + boxes + ")";
 
       if (i !== boxes - 1 && !changed && !valid) {
-        usedChar-=1;
+        usedChar -= 1;
         msg = "- (" + (i + 1) + "/" + boxes + ")";
       }
 
-      
+
       if (i === boxes - 1) {
-        if (s[endChar+l]!==undefined) {
+        if (s[endChar + l] !== undefined) {
           console.log("hmm, error?")
-          console.log(s[endChar+l]);
+          console.log(s[endChar + l]);
           boxes++;
           continue;
         }
@@ -141,18 +136,18 @@ class TweetBox extends React.Component {
 
 
   render() {
-    const arr = this.threadCutter(280,this.state.value);
+    const arr = this.threadCutter(280, this.state.value);
 
     const rendArr = []
 
-    if (arr.length>0) {
+    if (arr.length > 0) {
       for (let i = 0; i < arr.length; i++) {
 
-        rendArr.push(<ThreadBox key={i} val= {arr[i]} num={i} arrLen={arr.length}/>);
+        rendArr.push(<ThreadBox key={i} val={arr[i]} num={i} arrLen={arr.length} />);
       }
     }
     else {
-      rendArr.push(<ThreadBox key={0} val= {""} num={0} arrLen={arr.length}/>);
+      rendArr.push(<ThreadBox key={0} val={""} num={0} arrLen={arr.length} />);
     }
 
 
@@ -163,7 +158,7 @@ class TweetBox extends React.Component {
         <div className="column" style={{ backgroundColor: "#1DA1F1" }}>
           <form >
             <label>
-              Tweet:
+              <div style= {{color:"white",fontSize:"22px"}}>Tweet:</div>
           <textarea value={this.state.value} onChange={this.handleChange} />
             </label>
 
@@ -180,7 +175,7 @@ class TweetBox extends React.Component {
 }
 
 ReactDOM.render(
-  
+
   <TweetBox />,
   document.getElementById('root')
 );
