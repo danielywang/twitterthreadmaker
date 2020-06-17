@@ -15,15 +15,34 @@ class ThreadBox extends React.Component {
   }
 
   render() {
+    console.log(this.props.num);
+    console.log(this.props.val)
+    if (this.props.num === 0 && (this.props.arrLen === 1 || this.props.arrLen === 0)) {
+      let msg = this.props.val;
+      if (this.props.val === "") {
+        msg = "Start typing on the left!";
+      }
+      return (
+        <div className="ThreadBox initThread">
+          
+            <button onClick={() => {navigator.clipboard.writeText(msg)}} > Copy</button>
+            <p>{msg}</p>
+          
+        </div>
+      )
+    }
 
-    return (
-      <div className="ThreadBox">
-        
-          <button onClick={() => {navigator.clipboard.writeText(this.props.val)}} > Copy</button>
-          <p>{this.props.val}</p>
-        
-      </div>
-    )
+    else {
+
+      return (
+        <div className="ThreadBox">
+          
+            <button onClick={() => {navigator.clipboard.writeText(this.props.val)}} > Copy</button>
+            <p>{this.props.val}</p>
+          
+        </div>
+      )
+    }
   }
 
 
@@ -129,11 +148,11 @@ class TweetBox extends React.Component {
     if (arr.length>0) {
       for (let i = 0; i < arr.length; i++) {
 
-        rendArr.push(<ThreadBox key={i} val= {arr[i]}/>);
+        rendArr.push(<ThreadBox key={i} val= {arr[i]} num={i} arrLen={arr.length}/>);
       }
     }
     else {
-      rendArr.push(<ThreadBox key={0} val= {"Start typing on the left!"} className="initThread"/>);
+      rendArr.push(<ThreadBox key={0} val= {""} num={0} arrLen={arr.length}/>);
     }
 
 
