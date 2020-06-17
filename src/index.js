@@ -15,6 +15,7 @@ class ThreadBox extends React.Component {
   }
 
   render() {
+
     return (
       <div className="ThreadBox">
         
@@ -125,11 +126,15 @@ class TweetBox extends React.Component {
 
     const rendArr = []
 
-    for (let i = 0; i < arr.length; i++) {
+    if (arr.length>0) {
+      for (let i = 0; i < arr.length; i++) {
 
-      rendArr.push(<ThreadBox key={i} val= {arr[i]}/>);
+        rendArr.push(<ThreadBox key={i} val= {arr[i]}/>);
+      }
     }
-
+    else {
+      rendArr.push(<ThreadBox key={0} val= {"Start typing on the left!"} className="initThread"/>);
+    }
 
 
 

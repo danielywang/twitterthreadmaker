@@ -11,14 +11,16 @@ body {
 }
 
 button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50; 
   border: none;
   color: white;
   padding: 10px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  /* font-size: 16px; */
+  font: 16px "Century Gothic", Futura, sans-serif;
+
 }
 
 * {
@@ -31,7 +33,7 @@ button {
   border: 2px solid #000000;
 }
 
-/* Create two equal columns that floats next to each other */
+
 .column {
   float: left;
   width: 50%;
@@ -39,7 +41,6 @@ button {
   height: 100%;
 }
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
@@ -55,6 +56,10 @@ textarea {
   font: 18px "Century Gothic", Futura, sans-serif;
 }
 
+.initThread {
+  height:200px;
+}
+
 .center {
   margin: auto;
 }
@@ -63,30 +68,7 @@ ol, ul {
   padding-left: 30px;
 }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
 
-.status {
-  margin-bottom: 10px;
-}
-
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-
-}
-
-.play {
-  display: flex;
-  flex-direction: row;
-}
-
-.info {
-  margin-left: -90px;
-}
 
 footer {
   background-color:  rgb(255, 132, 0);
