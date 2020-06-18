@@ -122,10 +122,8 @@ class TweetBox extends React.Component {
       // for (let q = endChar + usedChar - 1; q > endChar + usedChar - l; q--) {
       for (let q = endChar + usedChar - l; q < endChar + usedChar -1; q++) {
         if (s.substring(q, q + 2) === "[]") {
-          console.log(s.substring(q, q + 2))
           interrupt = true;
           usedChar = q - endChar;
-          console.log(interrupt, usedChar)
           break;
         }
       }
@@ -135,7 +133,7 @@ class TweetBox extends React.Component {
         let checkEnd = true;
         if (!w) {
           //adjust thresh
-          thresh = 160;
+          thresh = 200;
           checkEnd = (s[endChar + usedChar] !== "." && s[endChar + usedChar] !== "," && s[endChar + usedChar] !== "?" && s[endChar + usedChar] !== "!")
         }
         else {
@@ -269,17 +267,24 @@ class Toggle extends React.Component {
 
   }
 
+  
   render() {
+    let s = <span>&nbsp;</span>
+    if (/Mobi/.test(navigator.userAgent)) {
+      s = <span><br></br></span>
+    }
+    
+
     let r = <div>
       Separate Tweets by: 
-      &nbsp; 
+      {s} 
 
   <button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg2()}>spaces</button>
     </div>
 
     if (this.props.val) {
       r = <div>
-        Separate Tweets by: &nbsp;
+        Separate Tweets by: {s}
     <button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg2()}>spaces</button>
       </div>
     }
