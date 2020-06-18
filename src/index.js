@@ -106,15 +106,17 @@ class TweetBox extends React.Component {
     return threads;
   }
 
-  threadCutter(l, s, w) {
+  threadCutter(l, s, w, r) {
     //working version. Prevents word cutoff
-    //l: max length of tweet, s: string of tweet, w: boolean, sep by word (!w = sentence)
+    //l: max length of tweet, s: string of tweet, w: boolean, sep by word (!w = sentence), r: recursive
     l -= 8;
     const len = s.length;
     let boxes = Number(Math.ceil(len / l));
     let threads = [];
     let endChar = 0;
-
+    if (r) {
+      boxes = this.threadCutter(l,s,w,false).length;
+    }
 
     for (let i = 0; i < boxes; i++) {
       let changed = false;
@@ -198,9 +200,11 @@ class TweetBox extends React.Component {
       endChar += usedChar + 1;
 
       //if more boxes are needed
-      if (interrupt || (s[endChar + l] !== undefined && i === boxes - 1)) {
-        boxes++;
-        continue;
+      if (!r) {
+        if (interrupt || (s[endChar + l] !== undefined && i === boxes - 1)) {
+          boxes++;
+          continue;
+        }
       }
     }
 
@@ -209,7 +213,7 @@ class TweetBox extends React.Component {
 
 
   render() {
-    const arr = this.threadCutter(280, this.state.value, this.state.toggleW);
+    const arr = this.threadCutter(280, this.state.value, this.state.toggleW, true);
 
     const rendArr = []
 
