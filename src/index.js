@@ -21,10 +21,10 @@ class ThreadBox extends React.Component {
       if (/Mobi/.test(navigator.userAgent)) {
         return (
           <div className="ThreadBox">
-  
+
             <button onClick={() => { navigator.clipboard.writeText(msg) }} > Copy</button>
             <p>{msg}</p>
-  
+
           </div>
         )
       }
@@ -60,7 +60,7 @@ class TweetBox extends React.Component {
     super(props);
     this.state = {
       value: 'Type your tweet here!',
-
+      toggleW: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -68,6 +68,18 @@ class TweetBox extends React.Component {
   handleChange(event) {
     this.setState({ value: event.target.value });
     event.preventDefault();
+  }
+
+  handleToggle1() {
+    this.setState({
+      toggleW: false
+    })
+  }
+
+  handleToggle2() {
+    this.setState({
+      toggleW: true
+    })
   }
 
 
@@ -90,8 +102,9 @@ class TweetBox extends React.Component {
     return threads;
   }
 
-  threadCutter(l, s) {
+  threadCutter(l, s, w) {
     //working version. Prevents word cutoff
+    //l: max length of tweet, s: string of tweet, w: boolean, sep by word (!w = sentence)
     l -= 8;
     const len = s.length;
     let boxes = Number(Math.ceil(len / l));
@@ -103,17 +116,32 @@ class TweetBox extends React.Component {
       let changed = false;
       let valid = true;
       let usedChar = l;
-      const thresh = 10
-
-      if (s.substring(endChar + usedChar, endChar + usedChar + 1) !== " ") {
+      let thresh = 10;
+      //change to match punctuation
+      let identiChar = " "
+      if (!w) {
+        //adjust
+        thresh = 80;
+        identiChar = ".";
+      }
+      //if ending isn't perfect, which it most likely isn't
+      if (s.substring(endChar + usedChar, endChar + usedChar + 1) !== identiChar) {
         valid = false;
-        // console.log(s.substring(endChar+usedChar,endChar+usedChar+1));
         for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
-          if (s.substring(j, j + 1) === " ") {
+          if (s.substring(j, j + 1) === identiChar) {
             usedChar = j - endChar;
-            // console.log(usedChar)
             changed = true;
             break;
+          }
+        }
+        //if punctuation is over thresh, remove once punc is implemented?
+        if (!w && !changed) {
+          for (let j = endChar + usedChar; j > endChar + usedChar - 15; j--) {
+            if (s.substring(j, j + 1) === " ") {
+              usedChar = j - endChar;
+              changed = true;
+              break;
+            }
           }
         }
 
@@ -121,26 +149,28 @@ class TweetBox extends React.Component {
 
       let msg = " (" + (i + 1) + "/" + boxes + ")";
 
-      if (i !== boxes - 1 && !changed && !valid) {
+      if (w && i !== boxes - 1 && !changed && !valid) {
         usedChar -= 1;
         msg = "- (" + (i + 1) + "/" + boxes + ")";
       }
 
 
       if (i === boxes - 1) {
-        if (s[endChar + l] !== undefined) {
-          console.log("hmm, error?")
-          console.log(s[endChar + l]);
-          boxes++;
-          continue;
-        }
         threads.push(s.substring(endChar, s.length) + msg);
       }
       else {
-        threads.push(s.substring(endChar, endChar + usedChar) + msg);
+        threads.push(s.substring(endChar, endChar + usedChar + 1) + msg);
       }
 
-      endChar += usedChar;
+      endChar += usedChar + 1;
+
+      //if more boxes are needed
+      if (s[endChar + l] !== undefined && i === boxes - 1) {
+        console.log("hmm, error?")
+        alert("yeah, more")
+        boxes++;
+        continue;
+      }
     }
 
     return threads;
@@ -148,7 +178,7 @@ class TweetBox extends React.Component {
 
 
   render() {
-    const arr = this.threadCutter(280, this.state.value);
+    const arr = this.threadCutter(280, this.state.value, this.state.toggleW);
 
     const rendArr = []
 
@@ -169,7 +199,7 @@ class TweetBox extends React.Component {
     let boxMBottom = "-5px";
     let boxPLeft = "20px";
     if (/Mobi/.test(navigator.userAgent)) {
-      box = <textarea value={this.state.value} onChange={this.handleChange} style={{minHeight:"250px",width:"100%",padding:"0",margin:'0'}}/>;
+      box = <textarea value={this.state.value} onChange={this.handleChange} style={{ minHeight: "250px", width: "100%", padding: "0", margin: '0' }} />;
       boxMBottom = "0px";
       boxPLeft = "0px";
       colName1 = "column";
@@ -177,25 +207,58 @@ class TweetBox extends React.Component {
     }
 
     return (
+      <div><Toggle func1={() => this.handleToggle1()} func2={() => this.handleToggle2()} val={this.state.toggleW} />
 
-      <div className="row">
-        <div className={colName1} style={{ backgroundColor: "#1DA1F1" }}>
-          <form >
-            <label>
-              <div style= {{color:"white",fontSize:"22px",paddingLeft:boxPLeft,marginBottom:boxMBottom,marginTop:"-5px"}}>Tweet:</div>
-          {/* <textarea value={this.state.value} onChange={this.handleChange} /> */}
-          {box}
-            </label>
+        <div className="row">
+          <div className={colName1} style={{ backgroundColor: "#1DA1F1" }}>
+            <form >
+              <label>
+                <div style={{ color: "white", fontSize: "22px", paddingLeft: boxPLeft, marginBottom: boxMBottom, marginTop: "-5px" }}>Tweet:</div>
+                {/* <textarea value={this.state.value} onChange={this.handleChange} /> */}
+                {box}
+              </label>
 
-          </form>
-        </div>
-        <div className={colName2} style={{ backgroundColor: "#E1E8EE" }}>
-          {rendArr}
+            </form>
+          </div>
+          <div className={colName2} style={{ backgroundColor: "#E1E8EE" }}>
+            {rendArr}
+          </div>
         </div>
       </div>
 
-
     );
+  }
+}
+
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      togg1: props.func1,
+      togg2: props.func2,
+    }
+
+  }
+
+  render() {
+    let r = <div>
+      Separate by: &nbsp;
+  <button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg1()}>period</button><button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg2()}>spaces</button>
+    </div>
+
+    if (this.props.val) {
+      r = <div>
+        Separate by: &nbsp;
+    <button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg1()}>period</button><button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg2()}>spaces</button>
+      </div>
+    }
+
+    return (
+      <div className="center" style={{ textAlign: "center" }}>
+        {r}
+        &nbsp;
+      </div>
+    )
   }
 }
 
