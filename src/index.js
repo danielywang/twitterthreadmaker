@@ -42,10 +42,14 @@ class ThreadBox extends React.Component {
     }
     //not first row
     else {
+      let b = <button onClick={() => { navigator.clipboard.writeText(this.props.val) }} > Copy</button>
+      var isChrome = !!window.chrome;
+      if (isChrome) {
+        b = <button style={{padding:"12px 20px"}} onClick={() => { navigator.clipboard.writeText(this.props.val) }} > Copy</button>
+      }
       return (
         <div className="ThreadBox">
-
-          <button onClick={() => { navigator.clipboard.writeText(this.props.val) }} > Copy</button>
+          {b}
           <p>{this.props.val}</p>
 
         </div>
@@ -276,9 +280,7 @@ class Toggle extends React.Component {
     
 
     let r = <div>
-      Separate Tweets by: 
-      {s} 
-
+      Separate Tweets by: {s} 
   <button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg2()}>spaces</button>
     </div>
 
@@ -292,7 +294,7 @@ class Toggle extends React.Component {
     return (
       <div className="center" style={{ textAlign: "center" }}>
         {r}
-      <p style={{marginTop:"-1px",marginBottom:"22px"}}>( manually separate by typing [] )</p>
+      <p style={{marginTop:"-1px",marginBottom:"22px"}}>( manually separate using [] )</p>
 
       </div>
     )

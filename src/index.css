@@ -13,6 +13,7 @@ body {
 button {
   background-color: #4CAF50; 
   border: none;
+  /* border:2px solid white; */
   color: white;
   padding: 10px 20px;
   text-align: center;
@@ -29,9 +30,8 @@ button:hover{
   cursor: pointer; 
 }
 
-button:focus{
-  border:2px solid white;
-}
+/* button:focus{
+} */
 
 
 
