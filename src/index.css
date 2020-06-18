@@ -75,7 +75,7 @@ button:focus{
 textarea {
   width: calc(100% - 20px); 
   /* width:100%; */
-  min-height:200px;
+  min-height:216px;
   height: fit-content;
   resize:vertical;
   padding: 10px;
@@ -86,7 +86,7 @@ textarea {
 }
 
 .initThread {
-  height:242px;
+  height:258px;
 }
 
 .center {

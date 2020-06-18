@@ -59,7 +59,7 @@ class TweetBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Type your tweet here!',
+      value: 'Type your [] tweet here!',
       toggleW: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -117,65 +117,61 @@ class TweetBox extends React.Component {
       let valid = true;
       let usedChar = l;
       let thresh = 10;
-      //change to match punctuation
+      let interrupt = false;
 
-      //before (if !w && unchanged)
-      // let identiChar = " "
-      // if (!w) {
-      //   //adjust
-      //   thresh = 80;
-      //   identiChar = ".";
-      // }
-      // //if ending isn't perfect, which it most likely isn't
-      // if (s[endChar + usedChar] !== identiChar) {
-      //   valid = false;
-      //   for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
-      //     if (s[j] === identiChar) {
-      //       usedChar = j - endChar;
-      //       changed = true;
-      //       break;
-      //     }
-      //   }
-      let checkEnd = true;
-      if (!w) {
-        //adjust thresh
-        thresh = 80;
-        checkEnd = (s[endChar + usedChar] !== "." && s[endChar + usedChar] !== "," && s[endChar + usedChar] !== "?" && s[endChar + usedChar] !== "!")
-      }
-      else {
-        checkEnd = (s[endChar + usedChar] !== " ")
-      }
-      //if ending isn't perfect, which it most likely isn't
-      if (checkEnd) {
-        valid = false;
-        for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
-          let checkBack = true;
-          if (w) {
-            checkBack = (s[j] === " ");
-          }
-          else {
-            checkBack = (s[j] === "." || s[j] === "," || s[j] === "!" || s[j] === "?")
-          }
-
-          if (checkBack) {
-            usedChar = j - endChar;
-            changed = true;
-            break;
-          }
+      // for (let q = endChar + usedChar - 1; q > endChar + usedChar - l; q--) {
+      for (let q = endChar + usedChar - l; q < endChar + usedChar -1; q++) {
+        if (s.substring(q, q + 2) === "[]") {
+          console.log(s.substring(q, q + 2))
+          interrupt = true;
+          usedChar = q - endChar;
+          console.log(interrupt, usedChar)
+          break;
         }
-        //if punctuation is over thresh, remove once punc is implemented?
-        if (!w && !changed) {
-          for (let j = endChar + usedChar; j > endChar + usedChar - 15; j--) {
-            if (s.substring(j, j + 1) === " ") {
+      }
+
+      if (!interrupt) {
+
+        let checkEnd = true;
+        if (!w) {
+          //adjust thresh
+          thresh = 160;
+          checkEnd = (s[endChar + usedChar] !== "." && s[endChar + usedChar] !== "," && s[endChar + usedChar] !== "?" && s[endChar + usedChar] !== "!")
+        }
+        else {
+          checkEnd = (s[endChar + usedChar] !== " ")
+        }
+        //if ending isn't perfect, which it most likely isn't
+        if (checkEnd) {
+          valid = false;
+          for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
+            let checkBack = true;
+            if (w) {
+              checkBack = (s[j] === " ");
+            }
+            else {
+              checkBack = (s[j] === "." || s[j] === "," || s[j] === "!" || s[j] === "?")
+            }
+
+            if (checkBack) {
               usedChar = j - endChar;
               changed = true;
               break;
             }
           }
+          //if punctuation is over thresh, remove once punc is implemented?
+          if (!w && !changed) {
+            for (let j = endChar + usedChar; j > endChar + usedChar - 15; j--) {
+              if (s.substring(j, j + 1) === " ") {
+                usedChar = j - endChar;
+                changed = true;
+                break;
+              }
+            }
+          }
+
         }
-
       }
-
       let msg = " (" + (i + 1) + "/" + boxes + ")";
 
       if (w && i !== boxes - 1 && !changed && !valid) {
@@ -183,20 +179,24 @@ class TweetBox extends React.Component {
         msg = "- (" + (i + 1) + "/" + boxes + ")";
       }
 
-
-      if (i === boxes - 1) {
-        threads.push(s.substring(endChar, s.length) + msg);
+      if (interrupt) {
+        threads.push(s.substring(endChar, endChar + usedChar) + msg);
+        endChar++;
       }
       else {
-        threads.push(s.substring(endChar, endChar + usedChar + 1) + msg);
+
+        if (i === boxes - 1) {
+          threads.push(s.substring(endChar, s.length) + msg);
+        }
+        else {
+          threads.push(s.substring(endChar, endChar + usedChar + 1) + msg);
+        }
       }
 
       endChar += usedChar + 1;
 
       //if more boxes are needed
-      if (s[endChar + l] !== undefined && i === boxes - 1) {
-        console.log("hmm, error?")
-        alert("yeah, more")
+      if (interrupt || (s[endChar + l] !== undefined && i === boxes - 1)) {
         boxes++;
         continue;
       }
@@ -271,21 +271,24 @@ class Toggle extends React.Component {
 
   render() {
     let r = <div>
-      Separate Tweets by: &nbsp;
-  <button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg1()}>punctuation</button><button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg2()}>spaces</button>
+      Separate Tweets by: 
+      &nbsp; 
+
+  <button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg2()}>spaces</button>
     </div>
 
     if (this.props.val) {
       r = <div>
         Separate Tweets by: &nbsp;
-    <button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg1()}>punctuation</button><button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg2()}>spaces</button>
+    <button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg2()}>spaces</button>
       </div>
     }
 
     return (
       <div className="center" style={{ textAlign: "center" }}>
         {r}
-        &nbsp;
+      <p style={{marginTop:"-1px",marginBottom:"22px"}}>( manually separate by typing [] )</p>
+
       </div>
     )
   }
