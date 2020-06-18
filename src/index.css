@@ -52,6 +52,18 @@ button:focus{
   padding: 10px;
   height: 100%;
 }
+.col1 {
+  float: left;
+  width: 62%;
+  padding: 10px;
+  height: 100%;
+}
+.col2 {
+  float: left;
+  width: 38%;
+  padding: 10px;
+  height: 100%;
+}
 
 .row:after {
   content: "";
@@ -61,15 +73,20 @@ button:focus{
 }
 
 textarea {
-  width: 100%; 
+  width: calc(100% - 20px); 
+  /* width:100%; */
   min-height:200px;
   height: fit-content;
   resize:vertical;
+  padding: 10px;
+  margin: 10px;
+  margin-top: 8px;
+  margin-bottom: 6px;
   font: 18px "Century Gothic", Futura, sans-serif;
 }
 
 .initThread {
-  height:238px;
+  height:239px;
 }
 
 .center {

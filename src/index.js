@@ -164,24 +164,32 @@ class TweetBox extends React.Component {
 
     //mobile height adjustment. Perhaps calculate this per screen?     
     let box = <textarea value={this.state.value} onChange={this.handleChange} />;
+    let colName1 = "col1";
+    let colName2 = "col2";
+    let boxMBottom = "-5px";
+    let boxPLeft = "20px";
     if (/Mobi/.test(navigator.userAgent)) {
-      box = <textarea value={this.state.value} onChange={this.handleChange} style={{minHeight:"250px"}}/>;
+      box = <textarea value={this.state.value} onChange={this.handleChange} style={{minHeight:"250px",width:"100%",padding:"0",margin:'0'}}/>;
+      boxMBottom = "0px";
+      boxPLeft = "0px";
+      colName1 = "column";
+      colName2 = "column";
     }
 
     return (
 
       <div className="row">
-        <div className="column" style={{ backgroundColor: "#1DA1F1" }}>
+        <div className={colName1} style={{ backgroundColor: "#1DA1F1" }}>
           <form >
             <label>
-              <div style= {{color:"white",fontSize:"22px"}}>Tweet:</div>
+              <div style= {{color:"white",fontSize:"22px",paddingLeft:boxPLeft,marginBottom:boxMBottom,marginTop:"-5px"}}>Tweet:</div>
           {/* <textarea value={this.state.value} onChange={this.handleChange} /> */}
           {box}
             </label>
 
           </form>
         </div>
-        <div className="column" style={{ backgroundColor: "#E1E8EE" }}>
+        <div className={colName2} style={{ backgroundColor: "#E1E8EE" }}>
           {rendArr}
         </div>
       </div>
