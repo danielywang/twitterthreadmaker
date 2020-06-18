@@ -118,17 +118,46 @@ class TweetBox extends React.Component {
       let usedChar = l;
       let thresh = 10;
       //change to match punctuation
-      let identiChar = " "
+
+      //before (if !w && unchanged)
+      // let identiChar = " "
+      // if (!w) {
+      //   //adjust
+      //   thresh = 80;
+      //   identiChar = ".";
+      // }
+      // //if ending isn't perfect, which it most likely isn't
+      // if (s[endChar + usedChar] !== identiChar) {
+      //   valid = false;
+      //   for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
+      //     if (s[j] === identiChar) {
+      //       usedChar = j - endChar;
+      //       changed = true;
+      //       break;
+      //     }
+      //   }
+      let checkEnd = true;
       if (!w) {
-        //adjust
+        //adjust thresh
         thresh = 80;
-        identiChar = ".";
+        checkEnd = (s[endChar + usedChar] !== "." && s[endChar + usedChar] !== "," && s[endChar + usedChar] !== "?" && s[endChar + usedChar] !== "!")
+      }
+      else {
+        checkEnd = (s[endChar + usedChar] !== " ")
       }
       //if ending isn't perfect, which it most likely isn't
-      if (s.substring(endChar + usedChar, endChar + usedChar + 1) !== identiChar) {
+      if (checkEnd) {
         valid = false;
         for (let j = endChar + usedChar; j > endChar + usedChar - thresh; j--) {
-          if (s.substring(j, j + 1) === identiChar) {
+          let checkBack = true;
+          if (w) {
+            checkBack = (s[j] === " ");
+          }
+          else {
+            checkBack = (s[j] === "." || s[j] === "," || s[j] === "!" || s[j] === "?")
+          }
+
+          if (checkBack) {
             usedChar = j - endChar;
             changed = true;
             break;
@@ -242,14 +271,14 @@ class Toggle extends React.Component {
 
   render() {
     let r = <div>
-      Separate by: &nbsp;
-  <button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg1()}>period</button><button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg2()}>spaces</button>
+      Separate Tweets by: &nbsp;
+  <button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg1()}>punctuation</button><button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg2()}>spaces</button>
     </div>
 
     if (this.props.val) {
       r = <div>
-        Separate by: &nbsp;
-    <button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg1()}>period</button><button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg2()}>spaces</button>
+        Separate Tweets by: &nbsp;
+    <button style={{backgroundColor:"#F5F8FA",color:"black"}} onClick={() => this.state.togg1()}>punctuation</button><button style={{backgroundColor:"#657786"}} onClick={() => this.state.togg2()}>spaces</button>
       </div>
     }
 
