@@ -202,7 +202,8 @@ class TweetBox extends React.Component {
       //if more boxes are needed
       if (!r) {
         // endchar+1! because it's any that is over, not just a perfect 280
-        if (interrupt || (s[endChar + 1] !== undefined && i === boxes - 1)) {
+        if (interrupt || (s[endChar + 2] !== undefined && i === boxes - 1)) {
+          console.log(endChar);
           boxes++;
           continue;
         }
