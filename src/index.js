@@ -236,7 +236,7 @@ class TweetBox extends React.Component {
     let boxMBottom = "-5px";
     let boxPLeft = "20px";
     if (/Mobi/.test(navigator.userAgent)) {
-      box = <textarea value={this.state.value} onChange={this.handleChange} style={{ minHeight: "250px", width: "100%", padding: "0", margin: '0' }} />;
+      box = <textarea value={this.state.value} onChange={this.handleChange} style={{ minHeight: "323px", width: "100%", padding: "0", margin: '0' }} />;
       boxMBottom = "0px";
       boxPLeft = "0px";
       colName1 = "column";
