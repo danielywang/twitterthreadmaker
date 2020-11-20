@@ -63,7 +63,7 @@ class TweetBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Type your [] tweet here!',
+      value: 'Type or paste [] your tweet here!',
       toggleW: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -287,13 +287,13 @@ class Toggle extends React.Component {
 
     let r = <div>
       Separate Tweets by: {s} 
-  <button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg2()}>spaces</button>
+  <button style={{ backgroundColor: "#657786",borderColor:"657786",border:"black" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#e1e8ee", color: "black",borderColor:"657786",border:"black" }} onClick={() => this.state.togg2()}>spaces</button>
     </div>
 
     if (this.props.val) {
       r = <div>
         Separate Tweets by: {s}
-    <button style={{ backgroundColor: "#F5F8FA", color: "black" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#657786" }} onClick={() => this.state.togg2()}>spaces</button>
+    <button style={{ backgroundColor: "#e1e8ee", color: "black" ,borderColor:"657786",border:"black" }} onClick={() => this.state.togg1()}>punctuation</button><button style={{ backgroundColor: "#657786",borderColor:"657786" ,border:"black"}} onClick={() => this.state.togg2()}>spaces</button>
       </div>
     }
 
